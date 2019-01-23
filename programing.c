@@ -8,7 +8,7 @@ struct fractions{
 void printArray (int *, int);
 
 int minFractions (struct fractions f1, struct fractions f2) {
-     return f1.counter * f2.denominator < f2.counter * f1.denominator
+     return f1.counter * f2.denominator < f2.counter * f1.denominator;
 }
 
 int printFractions(struct fractions f) {
@@ -38,8 +38,11 @@ void sortFract (struct fractions *t, int n){
         struct fractions min = t[y];
         for(int j = i + 1; j < n; j++){
             minFractions(t[j], min);
-            t[y] = t[i];
-            t[i] = min;
+            if(minFractions (t[j], min) == 1) {
+                t[y] = t[i];
+                t[i] = min;
+                min = t[j];
+            }
         }
     }
 
