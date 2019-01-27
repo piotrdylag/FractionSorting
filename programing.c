@@ -62,6 +62,12 @@ int counterByValue(struct fraction a[], struct fraction ar[]) {
     return a[j].value < a[j + 1].value;
 }
 
+int compareByMultiply(struct fraction a, struct fraction aa){
+
+    return a.counter * aa.denominator < aa.counter * a.denominator;
+
+}
+
 void bubbleSort(struct fraction *a, int n) {
 
     for (int i = 0; i < n; i++) {
