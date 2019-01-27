@@ -57,11 +57,16 @@ void swap(struct fraction *a, struct fraction *b) {
 
 }
 
+int counterByValue(struct fraction a[], struct fraction ar[]) {
+    int j;
+    return a[j].value < a[j + 1].value;
+}
+
 void bubbleSort(struct fraction *a, int n) {
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n - i - 1; j++) {
-            if (a[j].value > a[j + 1].value) {
+            if (counterByValue(&a[j], &a[j + 1])) {
                 swap(&a[j], &a[j + 1]);
             }
         }
@@ -93,7 +98,7 @@ int main() {
                                 {3, 8},
                                 {8, 9}};
     for (int i = 0; i < n; i++) {
-        array[i].value = (float)array[i].counter / array[i].denominator;
+        array[i].value = (float) array[i].counter / array[i].denominator;
         printf("%d/%d %f \n", array[i].counter, array[i].denominator, array[i].value);
     }
     printf("\n Sortowanie \n");
