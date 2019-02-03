@@ -16,7 +16,7 @@ int printFractions(struct fraction f) {
     printf("%d/%u, %f \n", f.counter, f.denominator, f.value);
 }
 
-void selectionSort(int *t, int n) {                  //Sortowanie prze wybieranie
+void selectionSort(int *t, int n) {                  //Sortowanie przez wybieranie
     for (int i = 0; i < n; i++) {
         int y = i;
         int min = t[y];
@@ -24,7 +24,6 @@ void selectionSort(int *t, int n) {                  //Sortowanie prze wybierani
             if (t[j] < min) {
                 min = t[j];
                 y = j;
-
             }
             t[y] = t[i];
             t[i] = min;
@@ -34,7 +33,6 @@ void selectionSort(int *t, int n) {                  //Sortowanie prze wybierani
 }
 
 void sortFract(struct fraction *t, int n) {
-
     for (int i = 0; i < n; i++) {
         int y = i;
         struct fraction min = t[y];
@@ -54,25 +52,20 @@ void swap(struct fraction *a, struct fraction *b) {
     struct fraction tmp = *a;
     *a = *b;
     *b = tmp;
-
 }
 
-int counterByValue(struct fraction a[], struct fraction ar[]) {
-    int j;
-    return a[j].value < a[j + 1].value;
+int compareByValue(struct fraction *left, struct fraction *right) {
+    return left->value < right->value;
 }
 
-int compareByMultiply(struct fraction a, struct fraction aa){
-
-    return a.counter * aa.denominator < aa.counter * a.denominator;
-
+int compareByMultiply(struct fraction *left, struct fraction *right) {
+    return left->counter * right->denominator < right->counter * left->denominator;
 }
 
 void bubbleSort(struct fraction *a, int n) {
-
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n - i - 1; j++) {
-            if (counterByValue(&a[j], &a[j + 1])) {
+            if (compareByMultiply(&a[j], &a[j + 1])) {
                 swap(&a[j], &a[j + 1]);
             }
         }
@@ -96,7 +89,6 @@ void printArray(int array[], int n) {
 
 int main() {
     const int n = 5;
-
     struct fraction array[5] = {{5, 4},
                                 {3, 4},
                                 {5, 8},
@@ -112,8 +104,6 @@ int main() {
     for (int i = 0; i < n; i++) {
         printFractions(array[i]);
     }
-
-
     return 0;
 }
 
