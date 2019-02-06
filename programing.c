@@ -88,7 +88,20 @@ void printArray(int array[], int n) {
 
 
 int main() {
-    const int n = 5;
+int x, y, z;
+    while(1){
+        x = 0;
+        y = 1;
+     do {
+         printf("%d\n", x);
+         z = x + y;
+         x = y;
+         y = z;
+        } while (x < 255);
+
+    }
+
+   /* const int n = 5;
     struct fraction array[5] = {{5, 4},
                                 {3, 4},
                                 {5, 8},
@@ -103,7 +116,7 @@ int main() {
     bubbleSort(array, n);
     for (int i = 0; i < n; i++) {
         printFractions(array[i]);
-    }
+    } */
     return 0;
 }
 
