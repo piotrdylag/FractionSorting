@@ -1,4 +1,5 @@
 #include <stdio.h>    // Instrukcja Preprocesora
+#include <stdlib.h>
 
 struct fraction {
     int counter;
@@ -86,37 +87,38 @@ void printArray(int array[], int n) {
     printf("}");
 }
 
+int * fibonacci(int n){
+    int * fib = (int *) malloc(n * sizeof(int));  // Dynamiczna alokacja zmiennej
+    fib[0] = 0;
+    fib[1] = 1;
+    for(int i = 2; i < n; i++){
+        fib[i] = fib[i-1] + fib[i-2];
+    }
+    return fib;
+}
 
 int main() {
-int x, y, z;
-    while(1){
-        x = 0;
-        y = 1;
-     do {
-         printf("%d\n", x);
-         z = x + y;
-         x = y;
-         y = z;
-        } while (x < 255);
+    int size;
+    printf("Podaj dlugosc ciagu Fibonacciego ");
+    scanf("%d", &size);
+    int * d = fibonacci(size);
+    printArray(d, size);
+    /* const int n = 5;
+     struct fraction array[5] = {{5, 4},
+                                 {3, 4},
+                                 {5, 8},
+                                 {1, 2},
+                                 {3, 8},
+                                 {8, 9}};
+     for (int i = 0; i < n; i++) {
+         array[i].value = (float) array[i].counter / array[i].denominator;
+         printf("%d/%d %f \n", array[i].counter, array[i].denominator, array[i].value);
+     }
+     printf("\n Sortowanie \n");
+     bubbleSort(array, n);
+     for (int i = 0; i < n; i++) {
+         printFractions(array[i]);
+     } */
 
-    }
-
-   /* const int n = 5;
-    struct fraction array[5] = {{5, 4},
-                                {3, 4},
-                                {5, 8},
-                                {1, 2},
-                                {3, 8},
-                                {8, 9}};
-    for (int i = 0; i < n; i++) {
-        array[i].value = (float) array[i].counter / array[i].denominator;
-        printf("%d/%d %f \n", array[i].counter, array[i].denominator, array[i].value);
-    }
-    printf("\n Sortowanie \n");
-    bubbleSort(array, n);
-    for (int i = 0; i < n; i++) {
-        printFractions(array[i]);
-    } */
-    return 0;
 }
 
