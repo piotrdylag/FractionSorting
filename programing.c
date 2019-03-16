@@ -7,6 +7,7 @@ struct fraction {
     float value;
 };
 
+
 void printArray(int *, int);
 
 int minFractions(struct fraction f1, struct fraction f2) {
@@ -87,22 +88,54 @@ void printArray(int array[], int n) {
     printf("}");
 }
 
-int * fibonacci(int n){
-    int * fib = (int *) malloc(n * sizeof(int));  // Dynamiczna alokacja zmiennej
+void printTwoDimArr(int *arr[][], int n, int m) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            printf("%d ", *arr[i][j]);
+            if (i == n) {
+                printf("\n");
+            }
+        }
+    }
+}
+}
+
+int *fibonacci(int n) {
+    int *fib = (int *) malloc(n * sizeof(int));  // Dynamiczna alokacja zmiennej
     fib[0] = 0;
     fib[1] = 1;
-    for(int i = 2; i < n; i++){
-        fib[i] = fib[i-1] + fib[i-2];
+    for (int i = 2; i < n; i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
     }
     return fib;
 }
 
+void swapNum(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+
+void bubbleSortNum(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swapNum(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+    printArray(arr, n);
+}
+
 int main() {
-    int size;
-    printf("Podaj dlugosc ciagu Fibonacciego ");
-    scanf("%d", &size);
-    int * d = fibonacci(size);
-    printArray(d, size);
+    int array[5][5] = {{2,  3,  1,  7,  5},
+                       {5,  87, 17, 33, 11},
+                       {44, 65, 25, 12, 78},
+                       {3,  22, 7,  13, 7},
+                       {43, 54, 33, 1,  0}};
+
+    printTwoDimArr(array, 5, 5);
     /* const int n = 5;
      struct fraction array[5] = {{5, 4},
                                  {3, 4},
