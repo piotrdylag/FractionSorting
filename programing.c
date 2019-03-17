@@ -88,17 +88,17 @@ void printArray(int array[], int n) {
     printf("}");
 }
 
-void printTwoDimArr(int *arr[][], int n, int m) {
+void printTwoDimArr(int n, int m, int arr[n][m]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
-            printf("%d ", *arr[i][j]);
-            if (i == n) {
+            printf("%d ", arr[i][j]);
+            if (j == n - 1) {
                 printf("\n");
             }
         }
     }
 }
-}
+
 
 int *fibonacci(int n) {
     int *fib = (int *) malloc(n * sizeof(int));  // Dynamiczna alokacja zmiennej
@@ -135,7 +135,7 @@ int main() {
                        {3,  22, 7,  13, 7},
                        {43, 54, 33, 1,  0}};
 
-    printTwoDimArr(array, 5, 5);
+    printTwoDimArr(5, 5, array);
     /* const int n = 5;
      struct fraction array[5] = {{5, 4},
                                  {3, 4},
