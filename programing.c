@@ -1,6 +1,8 @@
 #include <stdio.h>    // Instrukcja Preprocesora
 #include <stdlib.h>
 
+#define N 4
+
 struct fraction {
     int counter;
     unsigned denominator;
@@ -128,7 +130,59 @@ void bubbleSortNum(int arr[], int n) {
     printArray(arr, n);
 }
 
+int diagonal(int *a, int w) {  // w - liczba wierszy
+    int i, j;
+
+    for (i = 0; i < w; i++) {
+        for (j = 0; j < N; j++) {
+            if (j == i && (*(a + i) + j) != 0){
+                return 1;
+            } else {
+                return 0;
+            }
+
+        }
+    }
+}
+
+void insertSort(int arr[], int size){           // sortowanie przez wstawianie!
+    int i, j;
+    for(i = 1; i < size; i++){
+        int tmp = arr[i];
+        j = i - 1;
+        while(j >= 0 && arr[j] > tmp){
+            arr[j+1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = tmp;
+    }
+}
+
 int main() {
+
+    int array[] = {5, 3, 1, 0, 77};
+    int n = 5;
+    printf("__________Insertion sort__________");
+    printf("\n__________Array before sorting__________\n");
+    printArray(array, n);
+    printf("\n");
+    printf("\n__________Array after sorting__________\n");
+    insertSort(array, n);
+    printArray(array, n);
+
+
+
+    /* int m[N][N] = {{1, 0, 7, 0},
+                   {0, 5, 0, 4},
+                   {0, 0, 9, 0},
+                   {0, 0, 0, 3}};
+
+    printf("\nCzy diagonalna?\n");
+    if (diagonal(&m[N][N], 4))
+        printf("\n-TAK");
+    else printf("\n-NIE");
+
+
     int array[5][5] = {{2,  3,  1,  7,  5},
                        {5,  87, 17, 33, 11},
                        {44, 65, 25, 12, 78},
@@ -136,7 +190,7 @@ int main() {
                        {43, 54, 33, 1,  0}};
 
     printTwoDimArr(5, 5, array);
-    /* const int n = 5;
+     const int n = 5;
      struct fraction array[5] = {{5, 4},
                                  {3, 4},
                                  {5, 8},
