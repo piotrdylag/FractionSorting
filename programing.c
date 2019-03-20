@@ -1,13 +1,29 @@
 #include <stdio.h>    // Instrukcja Preprocesora
 #include <stdlib.h>
 
-#define N 4
+#include <time.h>
+
+#define N 5
+
+void linia(int);
+void putRandom( float (*)[N], int);
+void printArr( float (*)[N], int);
+float ** allocation(int w, int k);
+
 
 struct fraction {
     int counter;
     unsigned denominator;
     float value;
 };
+
+struct stack {
+    int value;
+    struct stack * next;
+};
+
+struct stack *pointer;
+struct stack *old;
 
 
 void printArray(int *, int);
@@ -18,23 +34,10 @@ int minFractions(struct fraction f1, struct fraction f2) {
 
 int printFractions(struct fraction f) {
     printf("%d/%u, %f \n", f.counter, f.denominator, f.value);
+    return 0;
 }
 
-void selectionSort(int *t, int n) {                  //Sortowanie przez wybieranie
-    for (int i = 0; i < n; i++) {
-        int y = i;
-        int min = t[y];
-        for (int j = i + 1; j < n; j++) {
-            if (t[j] < min) {
-                min = t[j];
-                y = j;
-            }
-            t[y] = t[i];
-            t[i] = min;
-        }
-    }
-    printArray(t, n);
-}
+
 
 void sortFract(struct fraction *t, int n) {
     for (int i = 0; i < n; i++) {
@@ -66,7 +69,7 @@ int compareByMultiply(struct fraction *left, struct fraction *right) {
     return left->counter * right->denominator < right->counter * left->denominator;
 }
 
-void bubbleSort(struct fraction *a, int n) {
+void bubbleSortfract(struct fraction *a, int n) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             if (compareByMultiply(&a[j], &a[j + 1])) {
@@ -119,16 +122,7 @@ void swapNum(int *a, int *b) {
 }
 
 
-void bubbleSortNum(int arr[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n; j++) {
-            if (arr[j] > arr[j + 1]) {
-                swapNum(&arr[j], &arr[j + 1]);
-            }
-        }
-    }
-    printArray(arr, n);
-}
+
 
 int diagonal(int *a, int w) {  // w - liczba wierszy
     int i, j;
@@ -143,6 +137,18 @@ int diagonal(int *a, int w) {  // w - liczba wierszy
 
         }
     }
+    return 0;
+}
+
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swapNum(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+    printArray(arr, n);
 }
 
 void insertSort(int arr[], int size){           // sortowanie przez wstawianie!
@@ -156,26 +162,121 @@ void insertSort(int arr[], int size){           // sortowanie przez wstawianie!
         }
         arr[j + 1] = tmp;
     }
+    printArray(arr, size);
 }
 
-int main() {
+void selectionSort(int *t, int n) {                  //Sortowanie przez wybieranie
+    for (int i = 0; i < n; i++) {
+        int y = i;
+        int min = t[y];
+        for (int j = i + 1; j < n; j++) {
+            if (t[j] < min) {
+                min = t[j];
+                y = j;
+            }
+            t[y] = t[i];
+            t[i] = min;
+        }
+    }
+    printArray(t, n);
+}
 
-    int array[] = {5, 3, 1, 0, 77};
+void quickSort(int arr[], int left, int right){
+    int l = left, r = right;
+    int pivot = arr[(l = r) / 2];
+    while (left <= right){
+        while (arr[l] < pivot)
+            l++;
+        while (arr[r] > pivot)
+            r++;
+        if(l < r){
+            swapNum(&arr[l], &arr[r]);
+            l++;
+            r++;
+        }
+    }
+        if(left < r) quickSort(arr, left, r);
+        if(l < right) quickSort(arr, l, right);
+}
+
+void addToStack(struct stack s1){
+
+}
+
+void switchMax(float arr[], int size, int j) {
+    int i, max = 0;
+
+    for (i = 1; i < size; i++) {
+        if (arr[max] < arr[i]) {
+            max = i;
+        }
+    }
+
+        int temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+
+
+}
+
+
+
+
+int main() {
+    float (*m)[N];
+    m = (float(*)[N]) malloc(N*N* sizeof(float));
+    int i;
+
+    linia(1);
+    /*(1) Dokona� dynamicznego przydzia�u pami�ci dla wska�nika m,tak aby m�g�
+    sta� si� parametrem aktualnym definiowanych poni�ej funkcji, zastosowa� funkcje -
+    wczyta� i wypisa� macierz
+   */
+    putRandom(*m, N);
+    printArr(*m, N);
+
+    linia(2);
+//(2) Wywo�a� funkcj� z zadania nr 3 dla tablicy m.
+
+    switchMax(m[i], N, i);
+    printArr(m, N);
+
+    linia(3);
+
+    for(int i = 0; i < N; i++){
+        switchMax(m[i], N, i);
+    }
+    printArr(m, N);
+
+
+//Zwolni� pami�� dla wska�nika m
+    linia(0);
+
+    for(i = 0; i < N; i++){
+        free(m[i]);
+        free(m);
+    }
+
+
+
+
+    /*int array[5] = {5, 3, 1, 0, 77};
     int n = 5;
     printf("__________Insertion sort__________");
     printf("\n__________Array before sorting__________\n");
     printArray(array, n);
     printf("\n");
     printf("\n__________Array after sorting__________\n");
-    insertSort(array, n);
-    printArray(array, n);
+    quickSort(array, 0, n - 1);
+    printArray(array, 5);
 
 
 
-    /* int m[N][N] = {{1, 0, 7, 0},
-                   {0, 5, 0, 4},
-                   {0, 0, 9, 0},
-                   {0, 0, 0, 3}};
+
+     int m[N][N] = {{1, 0, 7, 0},
+                     {0, 5, 0, 4},
+                     {0, 0, 9, 0},
+                     {0, 0, 0, 3}};
 
     printf("\nCzy diagonalna?\n");
     if (diagonal(&m[N][N], 4))
@@ -206,6 +307,34 @@ int main() {
      for (int i = 0; i < n; i++) {
          printFractions(array[i]);
      } */
+    return 0;
+}
+
+float ** allocation (int w, int k ){
+    float **p = (float **) malloc(w * sizeof(float*));
+}
+
+void putRandom( float (*a)[N],int w){
+    int i,j;
+    srand((unsigned)time(NULL));
+    for (i=0;i<w;i++){
+        for (j=0;j<N;j++)  a[i][j]=rand()%50*0.5;
+    }
 
 }
+void printArr(float(*a)[N],int w){
+    int i,j;
+    for (i=0;i<w;i++){
+        for (j=0;j<N;j++) printf("%.2f ",a[i][j]);
+        printf("\n");
+    }
+
+}
+
+
+void linia(int k){
+    if (k>0) printf("\n\n______________ %d ________________\n\n",k);
+    else printf("\n\n___________________________________\n\n");
+}
+
 
