@@ -6,9 +6,12 @@
 #define N 5
 
 void linia(int);
-void putRandom( float (*)[N], int);
-void printArr( float (*)[N], int);
-float ** allocation(int w, int k);
+
+void putRandom(float (*)[N], int);
+
+void printArr(float (*)[N], int);
+
+float **allocation(int w, int k);
 
 
 struct fraction {
@@ -19,7 +22,7 @@ struct fraction {
 
 struct stack {
     int value;
-    struct stack * next;
+    struct stack *next;
 };
 
 struct stack *pointer;
@@ -36,7 +39,6 @@ int printFractions(struct fraction f) {
     printf("%d/%u, %f \n", f.counter, f.denominator, f.value);
     return 0;
 }
-
 
 
 void sortFract(struct fraction *t, int n) {
@@ -122,14 +124,12 @@ void swapNum(int *a, int *b) {
 }
 
 
-
-
 int diagonal(int *a, int w) {  // w - liczba wierszy
     int i, j;
 
     for (i = 0; i < w; i++) {
         for (j = 0; j < N; j++) {
-            if (j == i && (*(a + i) + j) != 0){
+            if (j == i && (*(a + i) + j) != 0) {
                 return 1;
             } else {
                 return 0;
@@ -140,7 +140,7 @@ int diagonal(int *a, int w) {  // w - liczba wierszy
     return 0;
 }
 
-void bubbleSort(int arr[], int n) {
+void bubbleSort(int arr[], int n) {             // Sortowanie bąbelkowe
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n; j++) {
             if (arr[j] > arr[j + 1]) {
@@ -151,18 +151,32 @@ void bubbleSort(int arr[], int n) {
     printArray(arr, n);
 }
 
-void insertSort(int arr[], int size){           // sortowanie przez wstawianie!
+void insertSort(int arr[], int size) {           // sortowanie przez wstawianie!
     int i, j;
-    for(i = 1; i < size; i++){
+    for (i = 1; i < size; i++) {
         int tmp = arr[i];
         j = i - 1;
-        while(j >= 0 && arr[j] > tmp){
-            arr[j+1] = arr[j];
+        while (j >= 0 && arr[j] > tmp) {
+            arr[j + 1] = arr[j];
             j = j - 1;
         }
         arr[j + 1] = tmp;
     }
     printArray(arr, size);
+}
+
+void insertSortofChars(char arr[], int size) {           // sortowanie przez wstawianie!
+    int i, j;
+    for (i = 1; i < size; i++) {
+        int tmp = arr[i];
+        j = i - 1;
+        while (j >= 0 && arr[j] > tmp) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = tmp;
+    }
+
 }
 
 void selectionSort(int *t, int n) {                  //Sortowanie przez wybieranie
@@ -181,27 +195,24 @@ void selectionSort(int *t, int n) {                  //Sortowanie przez wybieran
     printArray(t, n);
 }
 
-void quickSort(int arr[], int left, int right){
+void quickSort(int arr[], int left, int right) {             //Szybkie sortowanie
     int l = left, r = right;
     int pivot = arr[(l = r) / 2];
-    while (left <= right){
+    while (left <= right) {
         while (arr[l] < pivot)
             l++;
         while (arr[r] > pivot)
             r++;
-        if(l < r){
+        if (l < r) {
             swapNum(&arr[l], &arr[r]);
             l++;
             r++;
         }
     }
-        if(left < r) quickSort(arr, left, r);
-        if(l < right) quickSort(arr, l, right);
+    if (left < r) quickSort(arr, left, r);
+    if (l < right) quickSort(arr, l, right);
 }
 
-void addToStack(struct stack s1){
-
-}
 
 void switchMax(float arr[], int size, int j) {
     int i, max = 0;
@@ -211,27 +222,36 @@ void switchMax(float arr[], int size, int j) {
             max = i;
         }
     }
-
-        int temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
-
-
+    int temp = arr[j];
+    arr[j] = arr[j + 1];
+    arr[j + 1] = temp;
 }
 
 
 
-
 int main() {
-    float (*m)[N];
+    char array[5] = {'r', 'a', 'g', 'h', 'b'};
+    printf("Before sorting alphabet\n");
+    for(int i = 0; i < 5; i++){
+        printf("%c ", array[i]);
+    }
+    printf("\n");
+    printf("After sorting alphabet\n");
+    insertSortofChars(array, 5);
+    for(int i = 0; i < 5; i++){
+        printf("%c ", array[i]);
+    }
+
+
+    /* float (*m)[N];
     m = (float(*)[N]) malloc(N*N* sizeof(float));
     int i;
 
     linia(1);
-    /*(1) Dokona� dynamicznego przydzia�u pami�ci dla wska�nika m,tak aby m�g�
+    (1) Dokona� dynamicznego przydzia�u pami�ci dla wska�nika m,tak aby m�g�
     sta� si� parametrem aktualnym definiowanych poni�ej funkcji, zastosowa� funkcje -
     wczyta� i wypisa� macierz
-   */
+
     putRandom(*m, N);
     printArr(*m, N);
 
@@ -260,7 +280,7 @@ int main() {
 
 
 
-    /*int array[5] = {5, 3, 1, 0, 77};
+    int array[5] = {5, 3, 1, 0, 77};
     int n = 5;
     printf("__________Insertion sort__________");
     printf("\n__________Array before sorting__________\n");
@@ -310,31 +330,30 @@ int main() {
     return 0;
 }
 
-float ** allocation (int w, int k ){
-    float **p = (float **) malloc(w * sizeof(float*));
+float **allocation(int w, int k) {
+    float **p = (float **) malloc(w * sizeof(float *));
 }
 
-void putRandom( float (*a)[N],int w){
-    int i,j;
-    srand((unsigned)time(NULL));
-    for (i=0;i<w;i++){
-        for (j=0;j<N;j++)  a[i][j]=rand()%50*0.5;
+void putRandom(float (*a)[N], int w) {
+    int i, j;
+    srand((unsigned) time(NULL));
+    for (i = 0; i < w; i++) {
+        for (j = 0; j < N; j++) a[i][j] = rand() % 50 * 0.5;
     }
 
 }
-void printArr(float(*a)[N],int w){
-    int i,j;
-    for (i=0;i<w;i++){
-        for (j=0;j<N;j++) printf("%.2f ",a[i][j]);
+
+void printArr(float(*a)[N], int w) {
+    int i, j;
+    for (i = 0; i < w; i++) {
+        for (j = 0; j < N; j++) printf("%.2f ", a[i][j]);
         printf("\n");
     }
 
 }
 
 
-void linia(int k){
-    if (k>0) printf("\n\n______________ %d ________________\n\n",k);
+void linia(int k) {
+    if (k > 0) printf("\n\n______________ %d ________________\n\n", k);
     else printf("\n\n___________________________________\n\n");
 }
-
-
