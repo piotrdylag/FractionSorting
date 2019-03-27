@@ -1,9 +1,13 @@
 #include <stdio.h>    // Instrukcja Preprocesora
 #include <stdlib.h>
-
 #include <time.h>
-
 #define N 5
+#define Max 50
+
+
+char exampleFunction(const char *s){
+    return *s;
+}
 
 void linia(int);
 
@@ -227,73 +231,105 @@ void switchMax(float arr[], int size, int j) {
     arr[j + 1] = temp;
 }
 
+int howManyDifnum(float *arr, int n){
+    int sum = n;                            //zmniejszać o 1 gdy będzie jakaś liczba taka sama od drugiej
+    int i, j;
+    for(i = 0; i < n; i++)
+        for(j = 0; j < n; j++){
+            if(arr[i] == arr[j] && i != j){
+                sum--;
+                break;
+        }
+    }
+  return sum;
+}
+
+int strlen1(const char *s){
+    int n;
+    for(n=0; *s != '\0'; ++s)++n;
+    return n;
+}
+
+void strcpy1(char *t, const char *s){
+    while((*t = *s) != '\0'){
+        s++;
+        t++;
+    }
+}
 
 
 int main() {
-    char array[5] = {'r', 'a', 'g', 'h', 'b'};
-    printf("Before sorting alphabet\n");
-    for(int i = 0; i < 5; i++){
-        printf("%c ", array[i]);
-    }
-    printf("\n");
-    printf("After sorting alphabet\n");
-    insertSortofChars(array, 5);
-    for(int i = 0; i < 5; i++){
-        printf("%c ", array[i]);
-    }
+
+    char tekst[Max]="Sztuka dobrego wyboru";
+    linia(1);
+/*1) Sprawdzic dzialanie programu
+
+    puts(tekst);
+    printf("%c\n", exampleFunction(tekst));*/
+
+    linia(2);
+//(2) Pobra� z wej�cia dowolny ci�g znakowy i sprawdzic jego d�ugo��
+//wykorzystuj�c funkcje strlen1 i strlen2
+
+    gets(tekst);
+    puts(tekst);
+    printf("Ciąg sklada sie z %d znakow", strlen1(tekst));
 
 
-    /* float (*m)[N];
+
+
+    //inia(3);
+//(3) Przydzieli� dynamicznie pami�� dla tablicy o d�ugo�ci odpowiadaj�cej
+//pobranemu ci�gowi znak�w i skopiowa� do niej ten ci�g
+//wykorzystuj�c funkcje  strcpy1 i strcpy2
+
+
+
+
+
+
+
+    /*float (*m)[N];
     m = (float(*)[N]) malloc(N*N* sizeof(float));
-    int i;
 
     linia(1);
     (1) Dokona� dynamicznego przydzia�u pami�ci dla wska�nika m,tak aby m�g�
     sta� si� parametrem aktualnym definiowanych poni�ej funkcji, zastosowa� funkcje -
-    wczyta� i wypisa� macierz
+    wczyta� i wypisa� macierz*/
 
-    putRandom(*m, N);
-    printArr(*m, N);
+    //putRandom(*m, N);
+    //printArr(*m, N);
 
-    linia(2);
+    //linia(2);
 //(2) Wywo�a� funkcj� z zadania nr 3 dla tablicy m.
 
-    switchMax(m[i], N, i);
-    printArr(m, N);
+    /*switchMax(m[i], N, i);
+    printArr(m, N);*/
 
-    linia(3);
+   // linia(3);
 
-    for(int i = 0; i < N; i++){
+    /*for(int i = 0; i < N; i++){
         switchMax(m[i], N, i);
     }
-    printArr(m, N);
+    printArr(m, N);*/
+
+   // linia(4);
 
 
-//Zwolni� pami�� dla wska�nika m
-    linia(0);
 
-    for(i = 0; i < N; i++){
+
+
+    //Zwolni� pami�� dla wska�nika m
+    //linia(0);
+
+    /*for(i = 0; i < N; i++){
         free(m[i]);
         free(m);
-    }
+    }*/
 
 
 
-
-    int array[5] = {5, 3, 1, 0, 77};
-    int n = 5;
-    printf("__________Insertion sort__________");
-    printf("\n__________Array before sorting__________\n");
-    printArray(array, n);
-    printf("\n");
-    printf("\n__________Array after sorting__________\n");
-    quickSort(array, 0, n - 1);
-    printArray(array, 5);
-
-
-
-
-     int m[N][N] = {{1, 0, 7, 0},
+     /*int m[N][N] = {{1, 0, 7, 0},
                      {0, 5, 0, 4},
                      {0, 0, 9, 0},
                      {0, 0, 0, 3}};
@@ -330,8 +366,13 @@ int main() {
     return 0;
 }
 
-float **allocation(int w, int k) {
-    float **p = (float **) malloc(w * sizeof(float *));
+float **allocation(int w, int k){
+    int i;
+    float **p=(float **)malloc(w*sizeof(float *));
+    for(i=0; i< w; i++)
+        p[i]=(float *)malloc(k*sizeof(float));
+
+    return p;
 }
 
 void putRandom(float (*a)[N], int w) {
