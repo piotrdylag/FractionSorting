@@ -3,6 +3,7 @@
 #include <time.h>
 #define N 5
 #define Max 50
+#include <ctype.h>
 
 
 char exampleFunction(const char *s){
@@ -33,7 +34,6 @@ struct stack *pointer;
 struct stack *old;
 
 
-void printArray(int *, int);
 
 int minFractions(struct fraction f1, struct fraction f2) {
     return f1.counter * f2.denominator < f2.counter * f1.denominator;
@@ -87,13 +87,13 @@ void bubbleSortfract(struct fraction *a, int n) {
 }
 
 
-void printArray(int array[], int n) {
+void printArray(char *array[], int n) {
     printf("{");
     for (int i = 0; i < n; i++) {
         if (i == n - 1) {
-            printf("%d", array[i]);
+            printf("%c", array[i]);
         } else {
-            printf("%d, ", array[i]);
+            printf("%c, ", array[i]);
         }
     }
     printf("}");
@@ -250,30 +250,49 @@ int strlen1(const char *s){
     return n;
 }
 
-void strcpy1(char *t, const char *s){
-    while((*t = *s) != '\0'){
+void strcpy1(char *t, const char *s) {
+    while ((*t = *s) != '\0') {
         s++;
         t++;
+    }
+}
+void reversPrint(char *arr, int size){
+    for(int i = size - 1; i >= 0; i--){
+        printf("%c ", arr[i]);
+    }
+}
+
+void printChars(char *array, int size){
+    for(int i = 0; i < size; i++){
+        printf("%c ", array[i]);
     }
 }
 
 
 int main() {
 
-    char tekst[Max]="Sztuka dobrego wyboru";
-    linia(1);
-/*1) Sprawdzic dzialanie programu
+
+    /* char arr[5] = {'a', 'b', 'c', 'd', 'e'};
+    printf("__________Chars in normal position__________\n");
+    printChars(arr, 5);
+    printf("\n");
+    printf("__________Chars in revers position__________\n");
+    reversPrint(arr, 5);
+
+    //char tekst[Max]="Sztuka dobrego wyboru";
+    //linia(1);
+1) Sprawdzic dzialanie programu
 
     puts(tekst);
     printf("%c\n", exampleFunction(tekst));*/
 
-    linia(2);
+//    linia(2);
 //(2) Pobra� z wej�cia dowolny ci�g znakowy i sprawdzic jego d�ugo��
 //wykorzystuj�c funkcje strlen1 i strlen2
 
-    gets(tekst);
-    puts(tekst);
-    printf("Ciąg sklada sie z %d znakow", strlen1(tekst));
+    //gets(tekst);
+    //puts(tekst);
+    //printf("Ciąg sklada sie z %d znakow", strlen1(tekst));
 
 
 
