@@ -126,6 +126,18 @@ void printTwoDimArr(int n, int m, int arr[n][m]) {
     }
 }
 
+void printNumbers(int n) {
+    printf("{");
+    for (int i = 0; i < n; i++) {
+        if (i == n - 1) {
+            printf("%d", i);
+        } else {
+            printf("%d, ", i);
+        }
+    }
+    printf("}");
+}
+
 
 int *fibonacci(int n) {
     int *fib = (int *) malloc(n * sizeof(int));  // Dynamiczna alokacja zmiennej
@@ -144,21 +156,15 @@ void swapNum(int *a, int *b) {
 }
 
 
-int diagonal(int *a, int w) {  // w - liczba wierszy
+int diagonalna(int **a, int w) {  // w - liczba wierszy
     int i, j;
-
-    for (i = 0; i < w; i++) {
-        for (j = 0; j < N; j++) {
-            if (j == i && (*(a + i) + j) != 0) {
-                return 1;
-            } else {
+    for (i = 0; i < w; i++)
+        for (j = 0; j < w; j++)
+            if (j != i && a[i][j] != 0)
                 return 0;
-            }
-
-        }
-    }
-    return 0;
+    return 1;
 }
+
 
 void bubbleSort(int arr[], int n) {             // Sortowanie bąbelkowe
     for (int i = 0; i < n - 1; i++) {
@@ -233,6 +239,14 @@ void quickSort(int arr[], int left, int right) {             //Szybkie sortowani
     if (l < right) quickSort(arr, l, right);
 }
 
+int *evenNum(int n) {
+    int *arrEven = (int *) malloc(n * sizeof(int));
+    for (int i = 0; i < n; i += 2) {
+        printNumbers(i);
+    }
+    return arrEven;
+}
+
 
 void switchMax(float arr[], int size, int j) {
     int i, max = 0;
@@ -255,9 +269,9 @@ int howManyDifnum(float *arr, int n){
             if(arr[i] == arr[j] && i != j){
                 sum--;
                 break;
+            }
         }
-    }
-  return sum;
+    return sum;
 }
 
 int strlen1(const char *s){
@@ -334,6 +348,41 @@ int tyl(struct kolejka* kolejka){
 int read(FILE *fp, char *s){
     return fscanf(fp, "%s", s);
 }
+
+//TODO implemet this function body
+//zadanie 1 (zadania_t2_2019.pdf)
+int licz(double *p1, double *p2, double x) {
+    int n = 0;
+    while (p1 < p2) {
+        if (*p1 == x) {
+            n++;
+        }
+        p1++;
+    }
+    return n;
+}
+
+void replace (float arr[3][3], int size){
+    float m = arr[0][0];
+    for(int r = 0; r < size; r++){
+        for(int c = 0; c < size; c++) {
+            if (arr[r][c] > m) {
+                m = arr[r][c];
+            }
+        }
+    }
+    int w = size;
+    while(w--){
+        arr[w][w] = m;
+    }
+}
+void swapRows(int **arr, int x, int y){
+    int *tmp = arr[x];
+    arr[x] = arr[y];
+    arr[y] = tmp;
+}
+
+
 void maxTwoDim(int **arr, int size){
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
@@ -355,7 +404,22 @@ int main() {
     printTwoDimArr(3, 3, a);
 
 
-    /*struct kolejka* kolejka = createQueue(1000);
+    /*
+     * int size = 4;
+    int **p = (int **)malloc(sizeof(int *) * size);
+    for(int i = 0; i < size; i++){
+        p[i] = (int *)malloc(sizeof(int) * size);
+        for(int j = 0; j < size; j++){
+            p[i][j] = i + 1;
+        }
+    }
+    swapRows(p, 1, 2);
+    printArray(p[0], size);
+    printArray(p[1], size);
+    printArray(p[2], size);
+    printArray(p[3], size);
+
+     struct kolejka* kolejka = createQueue(1000);
 
     kolejkuj(kolejka, 10);
     kolejkuj(kolejka, 20);
@@ -421,14 +485,14 @@ int main() {
     /*switchMax(m[i], N, i);
     printArr(m, N);*/
 
-   // linia(3);
+    // linia(3);
 
     /*for(int i = 0; i < N; i++){
         switchMax(m[i], N, i);
     }
     printArr(m, N);*/
 
-   // linia(4);
+    // linia(4);
 
 
 
@@ -444,40 +508,40 @@ int main() {
 
 
 
-     /*int m[N][N] = {{1, 0, 7, 0},
-                     {0, 5, 0, 4},
-                     {0, 0, 9, 0},
-                     {0, 0, 0, 3}};
+    /*int m[N][N] = {{1, 0, 7, 0},
+                    {0, 5, 0, 4},
+                    {0, 0, 9, 0},
+                    {0, 0, 0, 3}};
 
-    printf("\nCzy diagonalna?\n");
-    if (diagonal(&m[N][N], 4))
-        printf("\n-TAK");
-    else printf("\n-NIE");
+   printf("\nCzy diagonalna?\n");
+   if (diagonal(&m[N][N], 4))
+       printf("\n-TAK");
+   else printf("\n-NIE");
 
 
-    int array[5][5] = {{2,  3,  1,  7,  5},
-                       {5,  87, 17, 33, 11},
-                       {44, 65, 25, 12, 78},
-                       {3,  22, 7,  13, 7},
-                       {43, 54, 33, 1,  0}};
+   int array[5][5] = {{2,  3,  1,  7,  5},
+                      {5,  87, 17, 33, 11},
+                      {44, 65, 25, 12, 78},
+                      {3,  22, 7,  13, 7},
+                      {43, 54, 33, 1,  0}};
 
-    printTwoDimArr(5, 5, array);
-     const int n = 5;
-     struct fraction array[5] = {{5, 4},
-                                 {3, 4},
-                                 {5, 8},
-                                 {1, 2},
-                                 {3, 8},
-                                 {8, 9}};
-     for (int i = 0; i < n; i++) {
-         array[i].value = (float) array[i].counter / array[i].denominator;
-         printf("%d/%d %f \n", array[i].counter, array[i].denominator, array[i].value);
-     }
-     printf("\n Sortowanie \n");
-     bubbleSort(array, n);
-     for (int i = 0; i < n; i++) {
-         printFractions(array[i]);
-     } */
+   printTwoDimArr(5, 5, array);
+    const int n = 5;
+    struct fraction array[5] = {{5, 4},
+                                {3, 4},
+                                {5, 8},
+                                {1, 2},
+                                {3, 8},
+                                {8, 9}};
+    for (int i = 0; i < n; i++) {
+        array[i].value = (float) array[i].counter / array[i].denominator;
+        printf("%d/%d %f \n", array[i].counter, array[i].denominator, array[i].value);
+    }
+    printf("\n Sortowanie \n");
+    bubbleSort(array, n);
+    for (int i = 0; i < n; i++) {
+        printFractions(array[i]);
+    } */
     return 0;
 }
 
