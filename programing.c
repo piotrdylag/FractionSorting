@@ -1,9 +1,11 @@
 #include <stdio.h>    // Instrukcja Preprocesora
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #define N 5
 #define Max 50
 #include <ctype.h>
+#define pi 3.14
 
 
 char exampleFunction(const char *s){
@@ -32,6 +34,20 @@ struct stack {
 
 struct stack *pointer;
 struct stack *old;
+
+struct kolejka{
+    int przod, tyl, size;
+    unsigned capacity;
+    int* array;
+};
+
+struct node{            // węzeł
+    char *w;
+    int count;
+    struct node *left, *right;
+};
+
+
 
 
 
@@ -268,11 +284,91 @@ void printChars(char *array, int size){
     }
 }
 
+struct kolejka* createQueue(unsigned capacity){
+    struct kolejka* kolejka = (struct kolejka*) malloc(sizeof(struct kolejka));
+    kolejka->capacity = capacity;
+    kolejka->przod = kolejka->size = 0;
+    kolejka->tyl = capacity - 1;
+    kolejka->array = (int*) malloc(kolejka->capacity * sizeof(int));
+    return kolejka;
+}
 
+int czyPelna(struct kolejka* kolejka){
+    return (kolejka->size == kolejka->capacity);
+}
+
+int czyPusta(struct kolejka* kolejka){
+    return (kolejka->size == 0);
+}
+
+void kolejkuj(struct kolejka* kolejka, int item){
+    if (czyPelna(kolejka))
+        return;
+    kolejka->tyl = (kolejka->tyl + 1)%kolejka->capacity;
+    kolejka->array[kolejka->tyl] = item;
+    kolejka->size = kolejka->size + 1;
+    printf("%d dodane do kolejki\n", item);
+}
+
+int usunEle(struct kolejka* kolejka){
+    if (czyPusta(kolejka))
+        return 0;
+    int item = kolejka->array[kolejka->przod];
+    kolejka->przod = (kolejka->przod + 1)%kolejka->capacity;
+    kolejka->size = kolejka->size - 1;
+    return item;
+}
+
+int przod(struct kolejka* kolejka){
+    if (czyPusta(kolejka))
+        return 0;
+    return kolejka->array[kolejka->przod];
+}
+
+int tyl(struct kolejka* kolejka){
+    if (czyPusta(kolejka))
+        return 0;
+    return kolejka->array[kolejka->tyl];
+}
+
+int read(FILE *fp, char *s){
+    return fscanf(fp, "%s", s);
+}
+void maxTwoDim(int **arr, int size){
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < size; j++){
+            int max = arr[i][j];
+            if(arr[i][j] > max){
+                int tmp = arr[i][j];
+                arr[i][j] = max;
+                max = tmp;
+            }
+        }
+    }
+}
 int main() {
+    int a[3][3] = {{3, 56, 21}, {51, 87, 1}, {30, 99, 5}};
+    printf("__________Array before__________\n");
+    printTwoDimArr(3, 3, a);
+    maxTwoDim(a, 3);
+    printf("__________Array after__________\n");
+    printTwoDimArr(3, 3, a);
 
 
-    /* char arr[5] = {'a', 'b', 'c', 'd', 'e'};
+    /*struct kolejka* kolejka = createQueue(1000);
+
+    kolejkuj(kolejka, 10);
+    kolejkuj(kolejka, 20);
+    kolejkuj(kolejka, 30);
+    kolejkuj(kolejka, 40);
+
+    printf("%d Usuniete z kolejki\n\n", usunEle(kolejka));
+
+    printf("przod wynosi %d\n", przod(kolejka));
+    printf("tyl wynosi %d\n", tyl(kolejka));
+
+
+     char arr[5] = {'a', 'b', 'c', 'd', 'e'};
     printf("__________Chars in normal position__________\n");
     printChars(arr, 5);
     printf("\n");
