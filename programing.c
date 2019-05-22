@@ -5,6 +5,7 @@
 #define N 5
 #define Max 50
 #include <ctype.h>
+#include <string.h>
 #define pi 3.14
 
 
@@ -46,10 +47,20 @@ struct node{            // węzeł
     int count;
     struct node *left, *right;
 };
+//Zadanie 7a - plik zadania_t4.pdf
+struct EList{
+    int klucz;
+    struct EList *nast;
+};
 
 
+struct EList* dodaj_elem(struct EList*q, int x);
+void drukuj_liste(struct EList* q);
+struct EList* usun_elem(struct EList*q, int x);
+void drukuj_rek(struct EList *q);
+void drukuj_ostatni(struct EList *q);
 
-
+//--------------------------------------------------
 
 int minFractions(struct fraction f1, struct fraction f2) {
     return f1.counter * f2.denominator < f2.counter * f1.denominator;
@@ -103,13 +114,13 @@ void bubbleSortfract(struct fraction *a, int n) {
 }
 
 
-void printArray(char *array[], int n) {
+void printArray(int *array[], int n) {
     printf("{");
     for (int i = 0; i < n; i++) {
         if (i == n - 1) {
-            printf("%c", array[i]);
+            printf("%d", array[i]);
         } else {
-            printf("%c, ", array[i]);
+            printf("%d, ", array[i]);
         }
     }
     printf("}");
@@ -383,9 +394,10 @@ void swapRows(int **arr, int x, int y){
 }
 
 
-void maxTwoDim(int **arr, int size){
-    for(int i = 0; i < size; i++){
-        for(int j = 0; j < size; j++){
+void maxTwoDim(int arr[][3], int size){
+    int i, j;
+    for(i = 0; i < size; i++){
+        for( j = 0; j < size; j++){
             int max = arr[i][j];
             if(arr[i][j] > max){
                 int tmp = arr[i][j];
@@ -395,7 +407,106 @@ void maxTwoDim(int **arr, int size){
         }
     }
 }
+
+int toBinar(int x){
+    printf("%d\n", x);
+    if(x > 0){
+        if(x%2) {
+            printf("1");
+        }else printf("0");
+        return toBinar(x/2);
+    }
+}
+
+int printArrayback(int *arr, int n){       // Z zadania_t4_s.pdf 6 zadanie (rekurencyjnie wypisanie tablicy od tyłu)
+
+}
+
+struct node * new_node (char * word) {
+    struct node * tmp;
+    tmp = (struct node *) malloc(sizeof(struct node));
+    tmp->w = (char *) malloc(strlen(word) + 1);
+    strcpy(tmp->w, word);
+    tmp->count = 1;
+    tmp->left = tmp->right = NULL;
+    return tmp;
+}
+
+struct Elist* addNext(struct EList *q, int x){
+    if(q == NULL) {
+        q = (struct EList*) malloc(sizeof(struct EList));
+        q -> klucz = x;
+        q -> nast = NULL;
+    }else{
+        q -> nast = addNext(q -> nast, x);
+    }
+    return q;
+}
+
+void write(struct node *p){
+    if(p == NULL) return;
+    write(p->left);
+    printf("%s %d\n", p->w, p->count);
+    write(p->right);
+    while(p->right){
+        printf("%s %d\n", p->right->w, p->right->count);
+    }
+
+}
+
 int main() {
+
+
+    /* linia(1);
+(1) Sprawdziæ dzialanie programu
+
+    FILE *plik;
+
+    if ((plik=fopen("DANE.TXT","w"))==NULL) {
+        puts("Blad otwarcia pliku!");
+        exit(EXIT_FAILURE);
+    }
+
+    int i;
+    srand((unsigned int)time(0));
+    for (i=0;i<20;i++)
+        fprintf(plik,"%d ", rand()%100);
+
+    fclose(plik);
+
+    printf("Wylosowane liczby zapisano w pliku DANE.TXT\n");
+
+    linia(2);
+(2) Napisac instrukcje programu, ktore spowoduja odczytanie
+  liczb z pliku DANE.TXT i wyswietlenie ich na ekranie
+
+
+    int  i,x;
+    struct EList* glowa=NULL;
+
+
+    for(i=0;i<5; i++)
+        glowa=dodaj_elem(glowa,i);
+
+    printf("\n");
+    drukuj_liste(glowa);
+
+
+    if(glowa!=NULL){
+        printf("\nPodaj element do usuniecia: ");
+        scanf("%d", &x);
+        glowa=usun_elem(glowa,x);
+    }
+    else
+        printf("Lista pusta");
+
+    printf("\n");
+    drukuj_rek(glowa);
+
+    printf("\n");
+    drukuj_ostatni(glowa);
+
+    printf("%d", toBinar(11));
     int a[3][3] = {{3, 56, 21}, {51, 87, 1}, {30, 99, 5}};
     printf("__________Array before__________\n");
     printTwoDimArr(3, 3, a);
@@ -404,8 +515,8 @@ int main() {
     printTwoDimArr(3, 3, a);
 
 
-    /*
-     * int size = 4;
+
+    int size = 4;
     int **p = (int **)malloc(sizeof(int *) * size);
     for(int i = 0; i < size; i++){
         p[i] = (int *)malloc(sizeof(int) * size);
@@ -544,6 +655,71 @@ int main() {
     } */
     return 0;
 }
+
+//zadania_t4.pdf
+//------------------------------------------------------
+struct EList* dodaj_elem(struct EList*q, int x){
+    struct EList*pom;
+    pom=(struct EList*)malloc(sizeof(struct EList));
+    pom->klucz=x;
+    pom->nast=q;
+    q=pom;
+    return q;
+}
+
+//------------------------------------------------------
+void drukuj_liste(struct EList* q){
+    struct EList*pom;
+    int i=0;
+    pom=q;
+    if(pom==NULL)
+        printf("\nLista pusta");
+    else{
+        printf("\nElementy listy:");
+        while(pom!=NULL){
+            printf("\nElement nr %d: %d",++i,pom->klucz);
+            pom=pom->nast;
+        }
+    }
+}
+
+//------------------------------------------------------
+struct EList* usun_elem(struct EList*q, int x){
+    struct EList*pom, *tmp;
+    pom=q;
+    while (pom !=NULL && pom->klucz!= x){
+        tmp=pom;
+        pom=pom->nast;
+    }
+    if(pom!=NULL){
+        if (pom == q)
+            q=pom->nast;
+        else
+            tmp->nast=pom->nast;
+
+        free(pom);
+    }
+    else
+        printf("Elementu %d nie ma w liscie", x);
+    return q;
+}
+
+//------------------------------------------------------
+void drukuj_rek(struct EList *q){
+    if(q!=NULL){
+        drukuj_rek(q->nast);
+        printf("\n%d",q->klucz);
+    }
+}
+
+//------------------------------------------------------
+void drukuj_ostatni(struct EList *q){
+    if(q->nast==NULL)
+        printf("\n%d",q->klucz);
+    else
+        drukuj_ostatni(q->nast);
+}
+//------------------------------------------------------
 
 float **allocation(int w, int k){
     int i;
