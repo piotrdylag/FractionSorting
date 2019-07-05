@@ -508,7 +508,6 @@ float getRandomNumber(){
     return rand() %100;
 }
 
-//------------
 int main(int argc, char *argv[]) {
     int arr[10];
     srand(time(0));
