@@ -9,6 +9,7 @@
 #define pi 3.14
 
 
+
 char exampleFunction(const char *s){
     return *s;
 }
@@ -33,6 +34,10 @@ struct stack {
     struct stack *next;
 };
 
+struct wektor{
+    float x,y,z;
+}wek;
+
 struct stack *pointer;
 struct stack *old;
 
@@ -54,7 +59,7 @@ struct EList{
 };
 
 
-struct EList* dodaj_elem(struct EList*q, int x);
+struct EList* dodaj_elem();
 void drukuj_liste(struct EList* q);
 struct EList* usun_elem(struct EList*q, int x);
 void drukuj_rek(struct EList *q);
@@ -454,10 +459,178 @@ void write(struct node *p){
 
 }
 
-int main() {
+int f(int x){                   //rekurencja
+    printf("%d\n",x);
+    if (x>1) return f(x/2);
+    else return 0;
+}
+
+int sumRec(int n){          //Sumowanie rekurencyjne
+    int x = 2*n - 1;
+    printf("%d\n", x);
+    if(x > 1){
+        int tmp =  x + sumRec(n - 1);
+        printf("Wraca %d\n", tmp);
+        return tmp;
+    }
+    return 1;
+}
+
+int multRec(int n){          //Mnozenie rekurencyjne
+    int x = 3*n - 2;
+    printf("%d\n", x);
+    if(x > 1){
+        int tmp =  x * multRec(n - 1);
+        printf("Wraca %d\n", tmp);
+        return tmp;
+    }
+    return 1;
+}
+
+int find(int *arr, int x, int i){
+    if(arr[i] == x){
+        return i;
+    }else if(i < N){
+        return find(arr, x, ++i);
+    }
+    return -1;
+}
+
+void reverse(int *a, int i, int n){
+    int j = n - 1 - i;
+    swapNum(&a[i], &a[j]);
+    if(++i < n/2){
+        reverse(a, i, n);
+    }
+}
+
+float getRandomNumber(){
+    return rand() %100;
+}
+
+//------------
+int main(int argc, char *argv[]) {
+    int arr[10];
+    srand(time(0));
+    for(int i = 0; i < 10; i++){
+        arr[i] = rand() % 100;
+                printf("%d\n", arr[i] );
+    }
+
+   /* //Zadanie 4 z zadania_cz 2.pdf!!
+    float arr[20];
+    FILE *fp = fopen("wektory.bin", "w+");
+    fwrite(&wek, sizeof(struct wektor), 20, fp);
+    fseek(fp, 0, 0);
 
 
-    /* linia(1);
+
+
+fclose(fp);
+
+    sint denominator = 100;
+    FILE * fp = fopen("ULAMKI.TXT", "w+");
+    for(int i = 0; i < 100; i++) {
+        fprintf(fp, "%d/%d\n", getRandomNumber(), denominator);
+    }
+    rewind(fp);
+    int c, d;
+    float arr[100];
+    for(int j = 0; j < 100; j++) {
+        fscanf(fp, "%d/%d", &c, &d);
+        arr[j] = (float)c / (float)d;
+    }
+printf("%f\n", arr[0]);
+printf("%f\n", arr[1]);
+printf("%f", arr[99]);
+    fclose(fp);
+    time_t t;
+    srand(time(&t));
+    FILE *fp;
+    fp = fopen("DANE.TXT", "w+");
+    int fsize = 0;
+    for(int i = 0; i < 20; i++) {
+       fsize += fprintf(fp, "%d ", getRandomNumber());
+    }
+    printf("Odczyt\n");
+    //malloc!
+    char * buffer = malloc(fsize);
+    fseek(fp, 0, SEEK_SET);
+    fgets(buffer, fsize, fp);
+    fclose(fp);
+    printf("%s", buffer);
+
+
+    FILE *file;
+    char line[80];
+    if(argc!=3){
+        fprintf(stderr, "\nWywoluj z parametrami. %s 1:nazwa pliku 1, 2:nazwa pliku 2\n\n", argv[0]);
+        exit(1);
+    }
+    if ((file=fopen(argv[1],"a"))==NULL) {
+        fprintf(stdout,"Nie mozna otworzyc pliku: %s", argv[1]);
+        exit(0);
+    }
+
+    int lineCount = 0;
+
+    while(fgets(line, sizeof(line), file) != NULL){
+        lineCount++;
+        if((strstr(line, argv[2] ))!= NULL){
+            printf("Found word %s in line: %d -- %s\n", argv[2], lineCount, line);
+        }
+    }
+
+
+    linia(1);
+(1) Sprawdziæ dzialanie programu
+
+//Przyklad 1////////////////////////////////////////////
+
+    int i;
+    printf("Parametry programu:\n");
+    for (i=0;i<argc;i++)
+        printf("%s\n", argv[i]);
+
+//Przyklad 2  //////////////////////////////////////////
+
+while(argc>0){
+   printf("%s\n",*argv);
+   argc--;
+   argv++;
+}
+
+//Przyklad 3////////////////////////////////////////////
+
+//while( *++argv !=NULL)
+    // printf("%s\n",*argv);
+
+/////////////////////////////////////////////////////////
+    linia(2);
+
+    FILE *tekst1, *tekst2;
+
+    if(argc!=3){
+        fprintf(stderr, "\nWywoluj z parametrami. %s 1:nazwa pliku 1, 2:nazwa pliku 2\n\n", argv[0]);
+        exit(1);
+    }
+
+
+    if ((tekst1=fopen(argv[1],"a"))==NULL) {
+        fprintf(stdout,"%Nie mo¿na otworzyc pliku: %s", argv[1]);
+        exit(0);
+    }
+
+    printf("\nPlik %s otwarty do aktualizacji.\n", argv[1]);
+
+//Otworzyæ drugi plik
+//Dopisaæ zawartoæ drugiego pliku do pierwszego
+
+    if(fclose(tekst1)!=0)
+        fprintf(stderr, "Blad zamkniecia pliku %s.\n", *(argv+1));
+//Zamkn¹æ drugi plik
+
+     linia(1);
 (1) Sprawdziæ dzialanie programu
 
     FILE *plik;
