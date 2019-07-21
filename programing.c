@@ -190,7 +190,7 @@ void bubbleSort(int arr[], int n) {             // Sortowanie bąbelkowe
             }
         }
     }
-    printArray(arr, n);
+   // printArray(arr, n);
 }
 
 void insertSort(int arr[], int size) {           // sortowanie przez wstawianie!
@@ -509,12 +509,32 @@ float getRandomNumber(){
 }
 
 int main(int argc, char *argv[]) {
-    int arr[10];
-    srand(time(0));
-    for(int i = 0; i < 10; i++){
+    int arr[20];
+    time_t t;
+    srand((unsigned)time(&t));
+    FILE *fp = fopen("liczby.txt", "w+");
+    for(int i = 0; i < 20; i++){
         arr[i] = rand() % 100;
-                printf("%d\n", arr[i] );
+        printf("%d, ", arr[i]);
     }
+
+    for(int k = 0; k < 19; k++){
+        for(int m = 0; m < 19; m++){
+            if(arr[m] > arr[m + 1]){
+                int tmp = arr[m];
+                arr[m] = arr[m + 1];
+                arr[m + 1] = tmp;
+            }
+        }
+    }
+    for(int j = 0; j < 20; j++){
+        fprintf(fp, "%d\n", arr[j]);
+    }
+
+
+
+    fclose(fp);
+
 
    /* //Zadanie 4 z zadania_cz 2.pdf!!
     float arr[20];
