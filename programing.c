@@ -2,15 +2,17 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+
 #define N 5
 #define Max 50
+
 #include <ctype.h>
 #include <string.h>
+
 #define pi 3.14
 
 
-
-char exampleFunction(const char *s){
+char exampleFunction(const char *s) {
     return *s;
 }
 
@@ -34,35 +36,39 @@ struct stack {
     struct stack *next;
 };
 
-struct wektor{
-    float x,y,z;
-}wek;
+struct wektor {
+    float x, y, z;
+} wek;
 
 struct stack *pointer;
 struct stack *old;
 
-struct kolejka{
+struct kolejka {
     int przod, tyl, size;
     unsigned capacity;
-    int* array;
+    int *array;
 };
 
-struct node{            // węzeł
+struct node {            // węzeł
     char *w;
     int count;
     struct node *left, *right;
 };
 //Zadanie 7a - plik zadania_t4.pdf
-struct EList{
+struct EList {
     int klucz;
     struct EList *nast;
 };
 
 
-struct EList* dodaj_elem();
-void drukuj_liste(struct EList* q);
-struct EList* usun_elem(struct EList*q, int x);
+struct EList *dodaj_elem();
+
+void drukuj_liste(struct EList *q);
+
+struct EList *usun_elem(struct EList *q, int x);
+
 void drukuj_rek(struct EList *q);
+
 void drukuj_ostatni(struct EList *q);
 
 //--------------------------------------------------
@@ -190,7 +196,7 @@ void bubbleSort(int arr[], int n) {             // Sortowanie bąbelkowe
             }
         }
     }
-   // printArray(arr, n);
+    // printArray(arr, n);
 }
 
 void insertSort(int arr[], int size) {           // sortowanie przez wstawianie!
@@ -277,12 +283,12 @@ void switchMax(float arr[], int size, int j) {
     arr[j + 1] = temp;
 }
 
-int howManyDifnum(float *arr, int n){
+int howManyDifnum(float *arr, int n) {
     int sum = n;                            //zmniejszać o 1 gdy będzie jakaś liczba taka sama od drugiej
     int i, j;
-    for(i = 0; i < n; i++)
-        for(j = 0; j < n; j++){
-            if(arr[i] == arr[j] && i != j){
+    for (i = 0; i < n; i++)
+        for (j = 0; j < n; j++) {
+            if (arr[i] == arr[j] && i != j) {
                 sum--;
                 break;
             }
@@ -290,9 +296,9 @@ int howManyDifnum(float *arr, int n){
     return sum;
 }
 
-int strlen1(const char *s){
+int strlen1(const char *s) {
     int n;
-    for(n=0; *s != '\0'; ++s)++n;
+    for (n = 0; *s != '\0'; ++s)++n;
     return n;
 }
 
@@ -302,66 +308,67 @@ void strcpy1(char *t, const char *s) {
         t++;
     }
 }
-void reversPrint(char *arr, int size){
-    for(int i = size - 1; i >= 0; i--){
+
+void reversPrint(char *arr, int size) {
+    for (int i = size - 1; i >= 0; i--) {
         printf("%c ", arr[i]);
     }
 }
 
-void printChars(char *array, int size){
-    for(int i = 0; i < size; i++){
+void printChars(char *array, int size) {
+    for (int i = 0; i < size; i++) {
         printf("%c ", array[i]);
     }
 }
 
-struct kolejka* createQueue(unsigned capacity){
-    struct kolejka* kolejka = (struct kolejka*) malloc(sizeof(struct kolejka));
+struct kolejka *createQueue(unsigned capacity) {
+    struct kolejka *kolejka = (struct kolejka *) malloc(sizeof(struct kolejka));
     kolejka->capacity = capacity;
     kolejka->przod = kolejka->size = 0;
     kolejka->tyl = capacity - 1;
-    kolejka->array = (int*) malloc(kolejka->capacity * sizeof(int));
+    kolejka->array = (int *) malloc(kolejka->capacity * sizeof(int));
     return kolejka;
 }
 
-int czyPelna(struct kolejka* kolejka){
+int czyPelna(struct kolejka *kolejka) {
     return (kolejka->size == kolejka->capacity);
 }
 
-int czyPusta(struct kolejka* kolejka){
+int czyPusta(struct kolejka *kolejka) {
     return (kolejka->size == 0);
 }
 
-void kolejkuj(struct kolejka* kolejka, int item){
+void kolejkuj(struct kolejka *kolejka, int item) {
     if (czyPelna(kolejka))
         return;
-    kolejka->tyl = (kolejka->tyl + 1)%kolejka->capacity;
+    kolejka->tyl = (kolejka->tyl + 1) % kolejka->capacity;
     kolejka->array[kolejka->tyl] = item;
     kolejka->size = kolejka->size + 1;
     printf("%d dodane do kolejki\n", item);
 }
 
-int usunEle(struct kolejka* kolejka){
+int usunEle(struct kolejka *kolejka) {
     if (czyPusta(kolejka))
         return 0;
     int item = kolejka->array[kolejka->przod];
-    kolejka->przod = (kolejka->przod + 1)%kolejka->capacity;
+    kolejka->przod = (kolejka->przod + 1) % kolejka->capacity;
     kolejka->size = kolejka->size - 1;
     return item;
 }
 
-int przod(struct kolejka* kolejka){
+int przod(struct kolejka *kolejka) {
     if (czyPusta(kolejka))
         return 0;
     return kolejka->array[kolejka->przod];
 }
 
-int tyl(struct kolejka* kolejka){
+int tyl(struct kolejka *kolejka) {
     if (czyPusta(kolejka))
         return 0;
     return kolejka->array[kolejka->tyl];
 }
 
-int read(FILE *fp, char *s){
+int read(FILE *fp, char *s) {
     return fscanf(fp, "%s", s);
 }
 
@@ -378,33 +385,34 @@ int licz(double *p1, double *p2, double x) {
     return n;
 }
 
-void replace (float arr[3][3], int size){
+void replace(float arr[3][3], int size) {
     float m = arr[0][0];
-    for(int r = 0; r < size; r++){
-        for(int c = 0; c < size; c++) {
+    for (int r = 0; r < size; r++) {
+        for (int c = 0; c < size; c++) {
             if (arr[r][c] > m) {
                 m = arr[r][c];
             }
         }
     }
     int w = size;
-    while(w--){
+    while (w--) {
         arr[w][w] = m;
     }
 }
-void swapRows(int **arr, int x, int y){
+
+void swapRows(int **arr, int x, int y) {
     int *tmp = arr[x];
     arr[x] = arr[y];
     arr[y] = tmp;
 }
 
 
-void maxTwoDim(int arr[][3], int size){
+void maxTwoDim(int arr[][3], int size) {
     int i, j;
-    for(i = 0; i < size; i++){
-        for( j = 0; j < size; j++){
+    for (i = 0; i < size; i++) {
+        for (j = 0; j < size; j++) {
             int max = arr[i][j];
-            if(arr[i][j] > max){
+            if (arr[i][j] > max) {
                 int tmp = arr[i][j];
                 arr[i][j] = max;
                 max = tmp;
@@ -413,22 +421,22 @@ void maxTwoDim(int arr[][3], int size){
     }
 }
 
-int toBinar(int x){
+int toBinar(int x) {
     printf("%d\n", x);
-    if(x > 0){
-        if(x%2) {
+    if (x > 0) {
+        if (x % 2) {
             printf("1");
-        }else printf("0");
-        return toBinar(x/2);
+        } else printf("0");
+        return toBinar(x / 2);
     }
 }
 
-int printArrayback(int *arr, int n){       // Z zadania_t4_s.pdf 6 zadanie (rekurencyjnie wypisanie tablicy od tyłu)
+int printArrayback(int *arr, int n) {       // Z zadania_t4_s.pdf 6 zadanie (rekurencyjnie wypisanie tablicy od tyłu)
 
 }
 
-struct node * new_node (char * word) {
-    struct node * tmp;
+struct node *new_node(char *word) {
+    struct node *tmp;
     tmp = (struct node *) malloc(sizeof(struct node));
     tmp->w = (char *) malloc(strlen(word) + 1);
     strcpy(tmp->w, word);
@@ -437,317 +445,368 @@ struct node * new_node (char * word) {
     return tmp;
 }
 
-struct Elist* addNext(struct EList *q, int x){
-    if(q == NULL) {
-        q = (struct EList*) malloc(sizeof(struct EList));
-        q -> klucz = x;
-        q -> nast = NULL;
-    }else{
-        q -> nast = addNext(q -> nast, x);
+struct Elist *addNext(struct EList *q, int x) {
+    if (q == NULL) {
+        q = (struct EList *) malloc(sizeof(struct EList));
+        q->klucz = x;
+        q->nast = NULL;
+    } else {
+        q->nast = addNext(q->nast, x);
     }
     return q;
 }
 
-void write(struct node *p){
-    if(p == NULL) return;
+void write(struct node *p) {
+    if (p == NULL) return;
     write(p->left);
     printf("%s %d\n", p->w, p->count);
     write(p->right);
-    while(p->right){
+    while (p->right) {
         printf("%s %d\n", p->right->w, p->right->count);
     }
 
 }
 
-int f(int x){                   //rekurencja
-    printf("%d\n",x);
-    if (x>1) return f(x/2);
+int f(int x) {                   //rekurencja
+    printf("%d\n", x);
+    if (x > 1) return f(x / 2);
     else return 0;
 }
 
-int sumRec(int n){          //Sumowanie rekurencyjne
-    int x = 2*n - 1;
+int sumRec(int n) {          //Sumowanie rekurencyjne
+    int x = 2 * n - 1;
     printf("%d\n", x);
-    if(x > 1){
-        int tmp =  x + sumRec(n - 1);
+    if (x > 1) {
+        int tmp = x + sumRec(n - 1);
         printf("Wraca %d\n", tmp);
         return tmp;
     }
     return 1;
 }
 
-int multRec(int n){          //Mnozenie rekurencyjne
-    int x = 3*n - 2;
+int multRec(int n) {          //Mnozenie rekurencyjne
+    int x = 3 * n - 2;
     printf("%d\n", x);
-    if(x > 1){
-        int tmp =  x * multRec(n - 1);
+    if (x > 1) {
+        int tmp = x * multRec(n - 1);
         printf("Wraca %d\n", tmp);
         return tmp;
     }
     return 1;
 }
 
-int find(int *arr, int x, int i){
-    if(arr[i] == x){
+int find(int *arr, int x, int i) {
+    if (arr[i] == x) {
         return i;
-    }else if(i < N){
+    } else if (i < N) {
         return find(arr, x, ++i);
     }
     return -1;
 }
 
-void reverse(int *a, int i, int n){
+void reverse(int *a, int i, int n) {
     int j = n - 1 - i;
     swapNum(&a[i], &a[j]);
-    if(++i < n/2){
+    if (++i < n / 2) {
         reverse(a, i, n);
     }
 }
 
-float getRandomNumber(){
-    return rand() %100;
+float getRandomNumber() {
+    return rand() % 100;
+}
+
+//zadanie 1 (nowy zestaw zadań --> zadania_dodatkowe2019
+int *alokuj(int n) {
+    int ***T;
+    T = malloc(n * sizeof(int *));             //4x wskaźniki na całe wiersze!
+    for (int k = 0; k < n; k++) {
+        int c = n - k;
+        T[k] = malloc(c * sizeof(int *));      //c* wskaźniki na kolumny dla całego wiersza!
+        while (c--) {
+            T[k][c] = malloc(sizeof(int));                // alokacja pojedyńczej komórki (kolumny)
+        }
+    }
+    return T;
+}
+
+void wypelnij_wyswietl(int ***T, int n) {
+    for (int r = 0; r < n; r++) {
+        for (int c = 0; c < n - r; c++) {
+            *T[r][c] = c + 1;
+            printf("%d ", *T[r][c]);
+        }
+        printf("\n");
+    }
+}
+
+int liczba_podciagopw(char *text, char *search) {
+    int nt = strlen(text);
+    int ns = strlen(search);
+    int matches = 0;
+    int m;
+    for(int i = 1; i < nt; i++){
+        if(text[i] != search[0]){
+            continue;
+        }
+        m = 1;
+        for(int j = 0, k = i; j < ns; j++, k++){
+            if(text[k] != search[j]){
+                m = 0;
+                break;
+            }
+        }
+        if(m){
+            matches++;
+        }
+    }
+    return matches;
 }
 
 int main(int argc, char *argv[]) {
-    int arr[20];
-    time_t t;
-    srand((unsigned)time(&t));
-    FILE *fp = fopen("liczby.txt", "w+");
-    for(int i = 0; i < 20; i++){
-        arr[i] = rand() % 100;
-        printf("%d, ", arr[i]);
-    }
 
-    for(int k = 0; k < 19; k++){
-        for(int m = 0; m < 19; m++){
-            if(arr[m] > arr[m + 1]){
-                int tmp = arr[m];
-                arr[m] = arr[m + 1];
-                arr[m + 1] = tmp;
-            }
-        }
-    }
-    for(int j = 0; j < 20; j++){
-        fprintf(fp, "%d\n", arr[j]);
-    }
+    printf("podciagi=%d", liczba_podciagopw("mamama", "mam"));
 
+    // printf("0x%X", ptr[0][0]);
+    /* int arr[20];
+     time_t t;
+     srand((unsigned)time(&t));
+     FILE *fp = fopen("liczby.txt", "w+");
+     for(int i = 0; i < 20; i++){
+         arr[i] = rand() % 100;
+         printf("%d, ", arr[i]);
+     }
 
-
-    fclose(fp);
-
-
-   /* //Zadanie 4 z zadania_cz 2.pdf!!
-    float arr[20];
-    FILE *fp = fopen("wektory.bin", "w+");
-    fwrite(&wek, sizeof(struct wektor), 20, fp);
-    fseek(fp, 0, 0);
+     for(int k = 0; k < 19; k++){
+         for(int m = 0; m < 19; m++){
+             if(arr[m] > arr[m + 1]){
+                 int tmp = arr[m];
+                 arr[m] = arr[m + 1];
+                 arr[m + 1] = tmp;
+             }
+         }
+     }
+     for(int j = 0; j < 20; j++){
+         fprintf(fp, "%d\n", arr[j]);
+     }
 
 
 
-
-fclose(fp);
-
-    sint denominator = 100;
-    FILE * fp = fopen("ULAMKI.TXT", "w+");
-    for(int i = 0; i < 100; i++) {
-        fprintf(fp, "%d/%d\n", getRandomNumber(), denominator);
-    }
-    rewind(fp);
-    int c, d;
-    float arr[100];
-    for(int j = 0; j < 100; j++) {
-        fscanf(fp, "%d/%d", &c, &d);
-        arr[j] = (float)c / (float)d;
-    }
-printf("%f\n", arr[0]);
-printf("%f\n", arr[1]);
-printf("%f", arr[99]);
-    fclose(fp);
-    time_t t;
-    srand(time(&t));
-    FILE *fp;
-    fp = fopen("DANE.TXT", "w+");
-    int fsize = 0;
-    for(int i = 0; i < 20; i++) {
-       fsize += fprintf(fp, "%d ", getRandomNumber());
-    }
-    printf("Odczyt\n");
-    //malloc!
-    char * buffer = malloc(fsize);
-    fseek(fp, 0, SEEK_SET);
-    fgets(buffer, fsize, fp);
-    fclose(fp);
-    printf("%s", buffer);
+     fclose(fp);
 
 
-    FILE *file;
-    char line[80];
-    if(argc!=3){
-        fprintf(stderr, "\nWywoluj z parametrami. %s 1:nazwa pliku 1, 2:nazwa pliku 2\n\n", argv[0]);
-        exit(1);
-    }
-    if ((file=fopen(argv[1],"a"))==NULL) {
-        fprintf(stdout,"Nie mozna otworzyc pliku: %s", argv[1]);
-        exit(0);
-    }
-
-    int lineCount = 0;
-
-    while(fgets(line, sizeof(line), file) != NULL){
-        lineCount++;
-        if((strstr(line, argv[2] ))!= NULL){
-            printf("Found word %s in line: %d -- %s\n", argv[2], lineCount, line);
-        }
-    }
+     //Zadanie 4 z zadania_cz 2.pdf!!
+     float arr[20];
+     FILE *fp = fopen("wektory.bin", "w+");
+     fwrite(&wek, sizeof(struct wektor), 20, fp);
+     fseek(fp, 0, 0);
 
 
-    linia(1);
-(1) Sprawdziæ dzialanie programu
-
-//Przyklad 1////////////////////////////////////////////
-
-    int i;
-    printf("Parametry programu:\n");
-    for (i=0;i<argc;i++)
-        printf("%s\n", argv[i]);
-
-//Przyklad 2  //////////////////////////////////////////
-
-while(argc>0){
-   printf("%s\n",*argv);
-   argc--;
-   argv++;
-}
-
-//Przyklad 3////////////////////////////////////////////
-
-//while( *++argv !=NULL)
-    // printf("%s\n",*argv);
-
-/////////////////////////////////////////////////////////
-    linia(2);
-
-    FILE *tekst1, *tekst2;
-
-    if(argc!=3){
-        fprintf(stderr, "\nWywoluj z parametrami. %s 1:nazwa pliku 1, 2:nazwa pliku 2\n\n", argv[0]);
-        exit(1);
-    }
 
 
-    if ((tekst1=fopen(argv[1],"a"))==NULL) {
-        fprintf(stdout,"%Nie mo¿na otworzyc pliku: %s", argv[1]);
-        exit(0);
-    }
+ fclose(fp);
 
-    printf("\nPlik %s otwarty do aktualizacji.\n", argv[1]);
+     sint denominator = 100;
+     FILE * fp = fopen("ULAMKI.TXT", "w+");
+     for(int i = 0; i < 100; i++) {
+         fprintf(fp, "%d/%d\n", getRandomNumber(), denominator);
+     }
+     rewind(fp);
+     int c, d;
+     float arr[100];
+     for(int j = 0; j < 100; j++) {
+         fscanf(fp, "%d/%d", &c, &d);
+         arr[j] = (float)c / (float)d;
+     }
+ printf("%f\n", arr[0]);
+ printf("%f\n", arr[1]);
+ printf("%f", arr[99]);
+     fclose(fp);
+     time_t t;
+     srand(time(&t));
+     FILE *fp;
+     fp = fopen("DANE.TXT", "w+");
+     int fsize = 0;
+     for(int i = 0; i < 20; i++) {
+        fsize += fprintf(fp, "%d ", getRandomNumber());
+     }
+     printf("Odczyt\n");
+     //malloc!
+     char * buffer = malloc(fsize);
+     fseek(fp, 0, SEEK_SET);
+     fgets(buffer, fsize, fp);
+     fclose(fp);
+     printf("%s", buffer);
 
-//Otworzyæ drugi plik
-//Dopisaæ zawartoæ drugiego pliku do pierwszego
 
-    if(fclose(tekst1)!=0)
-        fprintf(stderr, "Blad zamkniecia pliku %s.\n", *(argv+1));
-//Zamkn¹æ drugi plik
+     FILE *file;
+     char line[80];
+     if(argc!=3){
+         fprintf(stderr, "\nWywoluj z parametrami. %s 1:nazwa pliku 1, 2:nazwa pliku 2\n\n", argv[0]);
+         exit(1);
+     }
+     if ((file=fopen(argv[1],"a"))==NULL) {
+         fprintf(stdout,"Nie mozna otworzyc pliku: %s", argv[1]);
+         exit(0);
+     }
+
+     int lineCount = 0;
+
+     while(fgets(line, sizeof(line), file) != NULL){
+         lineCount++;
+         if((strstr(line, argv[2] ))!= NULL){
+             printf("Found word %s in line: %d -- %s\n", argv[2], lineCount, line);
+         }
+     }
+
 
      linia(1);
-(1) Sprawdziæ dzialanie programu
+ (1) Sprawdziæ dzialanie programu
 
-    FILE *plik;
+ //Przyklad 1////////////////////////////////////////////
 
-    if ((plik=fopen("DANE.TXT","w"))==NULL) {
-        puts("Blad otwarcia pliku!");
-        exit(EXIT_FAILURE);
-    }
+     int i;
+     printf("Parametry programu:\n");
+     for (i=0;i<argc;i++)
+         printf("%s\n", argv[i]);
 
-    int i;
-    srand((unsigned int)time(0));
-    for (i=0;i<20;i++)
-        fprintf(plik,"%d ", rand()%100);
+ //Przyklad 2  //////////////////////////////////////////
 
-    fclose(plik);
+ while(argc>0){
+    printf("%s\n",*argv);
+    argc--;
+    argv++;
+ }
 
-    printf("Wylosowane liczby zapisano w pliku DANE.TXT\n");
+ //Przyklad 3////////////////////////////////////////////
 
-    linia(2);
-(2) Napisac instrukcje programu, ktore spowoduja odczytanie
-  liczb z pliku DANE.TXT i wyswietlenie ich na ekranie
+ //while( *++argv !=NULL)
+     // printf("%s\n",*argv);
 
+ /////////////////////////////////////////////////////////
+     linia(2);
 
-    int  i,x;
-    struct EList* glowa=NULL;
+     FILE *tekst1, *tekst2;
 
-
-    for(i=0;i<5; i++)
-        glowa=dodaj_elem(glowa,i);
-
-    printf("\n");
-    drukuj_liste(glowa);
-
-
-    if(glowa!=NULL){
-        printf("\nPodaj element do usuniecia: ");
-        scanf("%d", &x);
-        glowa=usun_elem(glowa,x);
-    }
-    else
-        printf("Lista pusta");
-
-    printf("\n");
-    drukuj_rek(glowa);
-
-    printf("\n");
-    drukuj_ostatni(glowa);
-
-    printf("%d", toBinar(11));
-    int a[3][3] = {{3, 56, 21}, {51, 87, 1}, {30, 99, 5}};
-    printf("__________Array before__________\n");
-    printTwoDimArr(3, 3, a);
-    maxTwoDim(a, 3);
-    printf("__________Array after__________\n");
-    printTwoDimArr(3, 3, a);
+     if(argc!=3){
+         fprintf(stderr, "\nWywoluj z parametrami. %s 1:nazwa pliku 1, 2:nazwa pliku 2\n\n", argv[0]);
+         exit(1);
+     }
 
 
+     if ((tekst1=fopen(argv[1],"a"))==NULL) {
+         fprintf(stdout,"%Nie mo¿na otworzyc pliku: %s", argv[1]);
+         exit(0);
+     }
 
-    int size = 4;
-    int **p = (int **)malloc(sizeof(int *) * size);
-    for(int i = 0; i < size; i++){
-        p[i] = (int *)malloc(sizeof(int) * size);
-        for(int j = 0; j < size; j++){
-            p[i][j] = i + 1;
-        }
-    }
-    swapRows(p, 1, 2);
-    printArray(p[0], size);
-    printArray(p[1], size);
-    printArray(p[2], size);
-    printArray(p[3], size);
+     printf("\nPlik %s otwarty do aktualizacji.\n", argv[1]);
 
-     struct kolejka* kolejka = createQueue(1000);
+ //Otworzyæ drugi plik
+ //Dopisaæ zawartoæ drugiego pliku do pierwszego
 
-    kolejkuj(kolejka, 10);
-    kolejkuj(kolejka, 20);
-    kolejkuj(kolejka, 30);
-    kolejkuj(kolejka, 40);
+     if(fclose(tekst1)!=0)
+         fprintf(stderr, "Blad zamkniecia pliku %s.\n", *(argv+1));
+ //Zamkn¹æ drugi plik
 
-    printf("%d Usuniete z kolejki\n\n", usunEle(kolejka));
+      linia(1);
+ (1) Sprawdziæ dzialanie programu
 
-    printf("przod wynosi %d\n", przod(kolejka));
-    printf("tyl wynosi %d\n", tyl(kolejka));
+     FILE *plik;
+
+     if ((plik=fopen("DANE.TXT","w"))==NULL) {
+         puts("Blad otwarcia pliku!");
+         exit(EXIT_FAILURE);
+     }
+
+     int i;
+     srand((unsigned int)time(0));
+     for (i=0;i<20;i++)
+         fprintf(plik,"%d ", rand()%100);
+
+     fclose(plik);
+
+     printf("Wylosowane liczby zapisano w pliku DANE.TXT\n");
+
+     linia(2);
+ (2) Napisac instrukcje programu, ktore spowoduja odczytanie
+   liczb z pliku DANE.TXT i wyswietlenie ich na ekranie
 
 
-     char arr[5] = {'a', 'b', 'c', 'd', 'e'};
-    printf("__________Chars in normal position__________\n");
-    printChars(arr, 5);
-    printf("\n");
-    printf("__________Chars in revers position__________\n");
-    reversPrint(arr, 5);
+     int  i,x;
+     struct EList* glowa=NULL;
 
-    //char tekst[Max]="Sztuka dobrego wyboru";
-    //linia(1);
-1) Sprawdzic dzialanie programu
 
-    puts(tekst);
-    printf("%c\n", exampleFunction(tekst));*/
+     for(i=0;i<5; i++)
+         glowa=dodaj_elem(glowa,i);
+
+     printf("\n");
+     drukuj_liste(glowa);
+
+
+     if(glowa!=NULL){
+         printf("\nPodaj element do usuniecia: ");
+         scanf("%d", &x);
+         glowa=usun_elem(glowa,x);
+     }
+     else
+         printf("Lista pusta");
+
+     printf("\n");
+     drukuj_rek(glowa);
+
+     printf("\n");
+     drukuj_ostatni(glowa);
+
+     printf("%d", toBinar(11));
+     int a[3][3] = {{3, 56, 21}, {51, 87, 1}, {30, 99, 5}};
+     printf("__________Array before__________\n");
+     printTwoDimArr(3, 3, a);
+     maxTwoDim(a, 3);
+     printf("__________Array after__________\n");
+     printTwoDimArr(3, 3, a);
+
+
+
+     int size = 4;
+     int **p = (int **)malloc(sizeof(int *) * size);
+     for(int i = 0; i < size; i++){
+         p[i] = (int *)malloc(sizeof(int) * size);
+         for(int j = 0; j < size; j++){
+             p[i][j] = i + 1;
+         }
+     }
+     swapRows(p, 1, 2);
+     printArray(p[0], size);
+     printArray(p[1], size);
+     printArray(p[2], size);
+     printArray(p[3], size);
+
+      struct kolejka* kolejka = createQueue(1000);
+
+     kolejkuj(kolejka, 10);
+     kolejkuj(kolejka, 20);
+     kolejkuj(kolejka, 30);
+     kolejkuj(kolejka, 40);
+
+     printf("%d Usuniete z kolejki\n\n", usunEle(kolejka));
+
+     printf("przod wynosi %d\n", przod(kolejka));
+     printf("tyl wynosi %d\n", tyl(kolejka));
+
+
+      char arr[5] = {'a', 'b', 'c', 'd', 'e'};
+     printf("__________Chars in normal position__________\n");
+     printChars(arr, 5);
+     printf("\n");
+     printf("__________Chars in revers position__________\n");
+     reversPrint(arr, 5);
+
+     //char tekst[Max]="Sztuka dobrego wyboru";
+     //linia(1);
+ 1) Sprawdzic dzialanie programu
+
+     puts(tekst);
+     printf("%c\n", exampleFunction(tekst));*/
 
 //    linia(2);
 //(2) Pobra� z wej�cia dowolny ci�g znakowy i sprawdzic jego d�ugo��
@@ -850,74 +909,73 @@ while(argc>0){
 
 //zadania_t4.pdf
 //------------------------------------------------------
-struct EList* dodaj_elem(struct EList*q, int x){
-    struct EList*pom;
-    pom=(struct EList*)malloc(sizeof(struct EList));
-    pom->klucz=x;
-    pom->nast=q;
-    q=pom;
+struct EList *dodaj_elem(struct EList *q, int x) {
+    struct EList *pom;
+    pom = (struct EList *) malloc(sizeof(struct EList));
+    pom->klucz = x;
+    pom->nast = q;
+    q = pom;
     return q;
 }
 
 //------------------------------------------------------
-void drukuj_liste(struct EList* q){
-    struct EList*pom;
-    int i=0;
-    pom=q;
-    if(pom==NULL)
+void drukuj_liste(struct EList *q) {
+    struct EList *pom;
+    int i = 0;
+    pom = q;
+    if (pom == NULL)
         printf("\nLista pusta");
-    else{
+    else {
         printf("\nElementy listy:");
-        while(pom!=NULL){
-            printf("\nElement nr %d: %d",++i,pom->klucz);
-            pom=pom->nast;
+        while (pom != NULL) {
+            printf("\nElement nr %d: %d", ++i, pom->klucz);
+            pom = pom->nast;
         }
     }
 }
 
 //------------------------------------------------------
-struct EList* usun_elem(struct EList*q, int x){
-    struct EList*pom, *tmp;
-    pom=q;
-    while (pom !=NULL && pom->klucz!= x){
-        tmp=pom;
-        pom=pom->nast;
+struct EList *usun_elem(struct EList *q, int x) {
+    struct EList *pom, *tmp;
+    pom = q;
+    while (pom != NULL && pom->klucz != x) {
+        tmp = pom;
+        pom = pom->nast;
     }
-    if(pom!=NULL){
+    if (pom != NULL) {
         if (pom == q)
-            q=pom->nast;
+            q = pom->nast;
         else
-            tmp->nast=pom->nast;
+            tmp->nast = pom->nast;
 
         free(pom);
-    }
-    else
+    } else
         printf("Elementu %d nie ma w liscie", x);
     return q;
 }
 
 //------------------------------------------------------
-void drukuj_rek(struct EList *q){
-    if(q!=NULL){
+void drukuj_rek(struct EList *q) {
+    if (q != NULL) {
         drukuj_rek(q->nast);
-        printf("\n%d",q->klucz);
+        printf("\n%d", q->klucz);
     }
 }
 
 //------------------------------------------------------
-void drukuj_ostatni(struct EList *q){
-    if(q->nast==NULL)
-        printf("\n%d",q->klucz);
+void drukuj_ostatni(struct EList *q) {
+    if (q->nast == NULL)
+        printf("\n%d", q->klucz);
     else
         drukuj_ostatni(q->nast);
 }
 //------------------------------------------------------
 
-float **allocation(int w, int k){
+float **allocation(int w, int k) {
     int i;
-    float **p=(float **)malloc(w*sizeof(float *));
-    for(i=0; i< w; i++)
-        p[i]=(float *)malloc(k*sizeof(float));
+    float **p = (float **) malloc(w * sizeof(float *));
+    for (i = 0; i < w; i++)
+        p[i] = (float *) malloc(k * sizeof(float));
 
     return p;
 }
