@@ -213,7 +213,7 @@ void insertSort(int arr[], int size) {           // sortowanie przez wstawianie!
     printArray(arr, size);
 }
 
-void insertSortofChars(char arr[], int size) {           // sortowanie przez wstawianie!
+void insertSortofChars(char arr[], int size) {           // sortowanie przez wstawianie(znaki)!
     int i, j;
     for (i = 1; i < size; i++) {
         int tmp = arr[i];
@@ -245,7 +245,7 @@ void selectionSort(int *t, int n) {                  //Sortowanie przez wybieran
 
 void quickSort(int arr[], int left, int right) {             //Szybkie sortowanie
     int l = left, r = right;
-    int pivot = arr[(l = r) / 2];
+    int pivot = arr[(l + r) / 2];
     while (left <= right) {
         while (arr[l] < pivot)
             l++;

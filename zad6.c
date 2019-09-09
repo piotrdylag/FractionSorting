@@ -24,6 +24,7 @@ int main(int argc, char *argv[]){
     }
 TOWAR produkt = {.nazwa = "pralka", .cena = 899.99, .id = 1};
     fwrite(&produkt, sizeof(produkt), 1, fp);
+
     fclose(fp);
 TOWAR kopia_produkt;
 
